@@ -10,6 +10,46 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const myTeam = []
+
+const managerQuestions = [{
+        type: "input",
+        name: "name",
+        message: "Enter manager's name",
+        validate: async input => {
+            if (input == "" || input.includes("0,1,2,3,4,5,6,7,8,9")) {
+                return "Please enter a valid name.";
+            }
+            return true;
+        }
+    },
+    {
+        type: "input",
+        name: "email",
+        message: "Enter manager's email",
+        validate: async input =>{
+            if(input.includes("@") & input.includes(".com")){
+                return true;
+            }
+            return "Please enter a valid email"
+        }
+    },
+    {
+        type: "input",
+        name: "officeNumber",
+        message: "Enter manager's office number",
+        vailidate: async input =>{
+            if (isNaN(input)){
+                return "The office number must include numbers only";
+            }
+            return true;
+        }
+    },
+    {
+        type: "list"
+    }
+]
+
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
