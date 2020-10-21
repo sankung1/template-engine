@@ -57,8 +57,57 @@ const managerQuestions = [{
 ]
 
 const employeeQuestions = [{
-    type: "list"
-}]
+        type: "input",
+        name: "name",
+        message: "Enter employee name",
+        validate: input => {
+            if (input == "" || input.includes("0123456789")) {
+                return "Please enter a valid name";
+            }
+            return true;
+        }
+    },
+    {
+        type: "input",
+        name: "email",
+        validate: input => {
+            if (input.includes("@") & input.includes(".com")) {
+                return true;
+            }
+            return "Please enter a valid email"
+        }
+    },
+    {
+        type: "list",
+        name: "role",
+        message: "What is the employee's role?",
+        choices: ["Engineer", "Intern"]
+    },
+    {
+        when: answer => answer.role === "Engineer",
+        type: "input",
+        message: "Enter the engineer's github username",
+        validate: input => {
+            if (input == "") {
+                return "Please enter a username"
+            }
+            return true;
+        }
+
+    },
+    {
+        when: answer => answer.role === "Intern",
+        type: "input",
+        message: "Enter the intern's school name",
+        validate: input => {
+            if (input == "") {
+                return "Please enter a school name"
+            }
+            return true;
+        }
+    }
+
+]
 
 
 
