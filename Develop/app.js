@@ -12,12 +12,15 @@ const render = require("./lib/htmlRenderer");
 
 const myTeam = []
 
+
+// Write code to use inquirer to gather information about the development team members,
+// and to create objects for each team member (using the correct classes as blueprints!)
 const managerQuestions = [{
         type: "input",
         name: "name",
         message: "Enter manager's name",
         validate: async input => {
-            if (input == "" || input.includes("0,1,2,3,4,5,6,7,8,9")) {
+            if (input == "" || input.includes("0123456789")) {
                 return "Please enter a valid name.";
             }
             return true;
@@ -27,8 +30,8 @@ const managerQuestions = [{
         type: "input",
         name: "email",
         message: "Enter manager's email",
-        validate: async input =>{
-            if(input.includes("@") & input.includes(".com")){
+        validate: async input => {
+            if (input.includes("@") & input.includes(".com")) {
                 return true;
             }
             return "Please enter a valid email"
@@ -38,21 +41,26 @@ const managerQuestions = [{
         type: "input",
         name: "officeNumber",
         message: "Enter manager's office number",
-        vailidate: async input =>{
-            if (isNaN(input)){
+        vailidate: async input => {
+            if (isNaN(input)) {
                 return "The office number must include numbers only";
             }
             return true;
-        }
+        },
     },
     {
-        type: "list"
+        type: "list",
+        name: "addEmployee",
+        message: "Do you want to add an Employee?",
+        choices: ["Yes", "No"]
     }
 ]
 
+const employeeQuestions = [{
+    type: "list"
+}]
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
+
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
