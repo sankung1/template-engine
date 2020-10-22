@@ -28,6 +28,17 @@ const managerQuestions = [{
     },
     {
         type: "input",
+        name: "id",
+        message: "Enter Manager's ID",
+        validate: async input => {
+            if (isNaN(input)) {
+                return "please enter a valid  ID"
+            }
+            return true;
+        }
+    },
+    {
+        type: "input",
         name: "email",
         message: "Enter manager's email",
         validate: async input => {
@@ -56,11 +67,12 @@ const managerQuestions = [{
     }
 ]
 
-const employeeQuestions = [{
+const employeeQuestions = [
+    {
         type: "input",
         name: "name",
         message: "Enter employee name",
-        validate: input => {
+        validate: async input => {
             if (input == "" || input.includes("0123456789")) {
                 return "Please enter a valid name";
             }
@@ -68,9 +80,21 @@ const employeeQuestions = [{
         }
     },
     {
+         type: "input",
+             name: "id",
+             message: "Enter employee id",
+             validate: async input => {
+                 if (isNaN(input)) {
+                     return "Please enter a valid ID";
+                 }
+                 return true;
+             }
+    },
+    {
         type: "input",
         name: "email",
-        validate: input => {
+        message: "Enter employee's email",
+        validate: async input => {
             if (input.includes("@") & input.includes(".com")) {
                 return true;
             }
@@ -84,7 +108,7 @@ const employeeQuestions = [{
         choices: ["Engineer", "Intern"]
     },
     {
-        when: answer => answer.role === "Engineer",
+        when: input => input.role == "Engineer",
         type: "input",
         message: "Enter the engineer's github username",
         validate: input => {
@@ -96,7 +120,7 @@ const employeeQuestions = [{
 
     },
     {
-        when: answer => answer.role === "Intern",
+        when: input => input.role == "Intern",
         type: "input",
         message: "Enter the intern's school name",
         validate: input => {
@@ -108,6 +132,35 @@ const employeeQuestions = [{
     }
 
 ]
+
+function createManager() {
+    inquirer.prompt(managerQuestions).then(managerInfo => {
+        let manager = new Manager(managerInfo.name, managerInfo.id, managerInfo.email, managerInfo.officeNumber);
+        myTeam.push(manager);
+        createEmployees(managerInfo)
+    })
+
+}
+
+function createEmployees(res) {
+    if (res.addEmployee === "Yes") {
+        inquirer.prompt(employeeQuestions).then(employeeInfo => {
+            if (employeeInfo.role == "Engineer") {
+                let engineer = new Engineer(employeeInfo.name, employeeInfo.id, employeeInfo.email, employeeInfo.github);
+                myTeam.push(engineer);
+            }
+            else if(employeeInfo.role == "Intern"){
+                let intern = new Intern(employeeInfo.name, employeeInfo.id, employeeInfo.email, employeeInfo.school)
+                myTeam.push(intern);
+            }
+            console.log(myTeam);
+        })
+
+    }
+
+}
+
+createManager();
 
 
 
