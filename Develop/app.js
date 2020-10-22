@@ -110,6 +110,7 @@ const employeeQuestions = [
     {
         when: input => input.role == "Engineer",
         type: "input",
+        name: "name",
         message: "Enter the engineer's github username",
         validate: input => {
             if (input == "") {
@@ -122,6 +123,7 @@ const employeeQuestions = [
     {
         when: input => input.role == "Intern",
         type: "input",
+        name: "School",
         message: "Enter the intern's school name",
         validate: input => {
             if (input == "") {
