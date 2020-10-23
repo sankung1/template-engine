@@ -79,7 +79,7 @@ function addTeamMember() {
         } else if (res.teamMember == "intern") {
             createIntern();
         } else {
-            init()
+            writeToFile(outputPath, render(myTeam));
         }
     })
 }
@@ -188,10 +188,15 @@ function createIntern() {
     })
 }
 
-
-function init() {
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data, err => {
+        if (err) {
+            throw err;
+        }
+        console.log("Successful");
+    });
 }
-init();
+
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
