@@ -129,64 +129,67 @@ function createEngineer() {
                 return true;
             }
         }
-    ])
-}
-// const employeeQuestions = [{
-//         type: "list",
-//         name: "role",
-//         message: "What is the employee's role?",
-//         choices: ["Engineer", "Intern"]
-//     },
-//     {
-//         when: input => input.role == "Engineer",
-
-
-//     },
-//     {
-//         when: input => input.role == "Intern",
-//         type: "input",
-//         name: "school",
-//         message: "Enter the intern's school name",
-//         validate: input => {
-//             if (input == "") {
-//                 return "Please enter a school name"
-//             }
-//             return true;
-//         }
-//     }
-
-
-
-function createEmployees(res) {
-
-    inquirer.prompt(employeeQuestions).then(employeeInfo => {
-        if (employeeInfo.role == "Engineer") {
-            let engineer = new Engineer(employeeInfo.name, employeeInfo.id, employeeInfo.email, employeeInfo.github);
-            myTeam.push(engineer);
-            addAnotherEmployee();
-            if (res.addAnother == "Yes") {
-                addAnotherEmployee();
-            } else {
-                console.log("Your team is set!")
-            }
-
-        } else if (employeeInfo.role == "Intern") {
-            let intern = new Intern(employeeInfo.name, employeeInfo.id, employeeInfo.email, employeeInfo.school)
-            myTeam.push(intern);
-            addAnotherEmployee();
-            if (res.addAnother == "Yes") {
-                addAnotherEmployee()
-            } else {
-                console.log("Your team is set!")
-            }
-
-        }
-        console.log(myTeam);
+    ]).then(res => {
+        const engineer = new Engineer(res.name, res.id, res.email, res.github);
+        myTeam.push(engineer);
+        addTeamMember();
     })
 }
 
+function createIntern() {
+    inquirer.prompt([{
+            type: "input",
+            name: "name",
+            message: "Enter employee name",
+            validate: async input => {
+                if (input == "" || input.includes("0123456789")) {
+                    return "Please enter a valid name";
+                }
+                return true;
+            }
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "Enter employee id",
+            validate: async input => {
+                if (isNaN(input)) {
+                    return "Please enter a valid ID";
+                }
+                return true;
+            }
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "Enter employee's email",
+            validate: async input => {
+                if (input.includes("@") & input.includes(".com")) {
+                    return true;
+                }
+                return "Please enter a valid email"
+            }
+        },
+        {
+            type: "input",
+            name: "school",
+            message: "Enter the intern's school name",
+            validate: input => {
+                if (input == "") {
+                    return "Please enter a school name"
+                }
+                return true;
+            }
+        }
+    ]).then(res =>{
+        const intern = new Intern(res.name, res.id, res.email, res.school)
+        myTeam.push(intern);
+        addTeamMember();
+    })
+}
+
+
 function init() {
-    createManager();
 }
 init();
 
