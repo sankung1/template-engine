@@ -63,6 +63,7 @@ function managerQuestions() {
     ]).then(answers => {
         let manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
         myTeam.push(manager);
+        addTeamMember()
     })
 
 }
@@ -88,7 +89,7 @@ function createEngineer() {
     inquirer.prompt([{
             type: "input",
             name: "name",
-            message: "Enter employee name",
+            message: "Enter the name of the engineer you want to add",
             validate: async input => {
                 if (input == "" || input.includes("0123456789")) {
                     return "Please enter a valid name";
@@ -99,7 +100,7 @@ function createEngineer() {
         {
             type: "input",
             name: "id",
-            message: "Enter employee id",
+            message: "Enter the engineer's id",
             validate: async input => {
                 if (isNaN(input)) {
                     return "Please enter a valid ID";
@@ -110,7 +111,7 @@ function createEngineer() {
         {
             type: "input",
             name: "email",
-            message: "Enter employee's email",
+            message: "Enter the engineer's email",
             validate: async input => {
                 if (input.includes("@") & input.includes(".com")) {
                     return true;
@@ -140,7 +141,7 @@ function createIntern() {
     inquirer.prompt([{
             type: "input",
             name: "name",
-            message: "Enter employee name",
+            message: "Enter the name of the intern you want to add",
             validate: async input => {
                 if (input == "" || input.includes("0123456789")) {
                     return "Please enter a valid name";
@@ -151,7 +152,7 @@ function createIntern() {
         {
             type: "input",
             name: "id",
-            message: "Enter employee id",
+            message: "Enter the intern's id",
             validate: async input => {
                 if (isNaN(input)) {
                     return "Please enter a valid ID";
@@ -162,7 +163,7 @@ function createIntern() {
         {
             type: "input",
             name: "email",
-            message: "Enter employee's email",
+            message: "Enter the intern's email",
             validate: async input => {
                 if (input.includes("@") & input.includes(".com")) {
                     return true;
@@ -196,7 +197,7 @@ function writeToFile(fileName, data) {
         console.log("Successful");
     });
 }
-
+managerQuestions();
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
